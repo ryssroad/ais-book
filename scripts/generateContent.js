@@ -171,9 +171,14 @@ function generateBookContent() {
 export const bookChapters = ${JSON.stringify(allChapters, null, 2)};
 
 export const bookMeta = {
-  title: "Логика на жаре",
+  title: "fear.and..loading / notes from swarm",
   subtitle: "Хроники ixxtab",
   description: "Документальное произведение о предсингулярном периоде, наблюдениях за развитием ИИ и границах сознания.",
+  quote: {
+    text: "Life is a hallucination that occurs while you are awake.",
+    translation: "Жизнь — это галлюцинация, которая происходит пока ты бодрствуешь.",
+    author: "Timothy Leary"
+  },
   year: "2025",
   location: "Сквозь стекло терминала",
   lastUpdated: "${new Date().toISOString()}",

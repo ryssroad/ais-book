@@ -1,13 +1,13 @@
 {
-  "name": "logika-na-zhare",
+  "name": "fear-and-loading",
   "version": "1.0.0",
-  "description": "Веб-приложение для отображения документального произведения 'Логика на жаре - Хроники ixxtab'",
+  "description": "Веб-приложение для отображения документального произведения 'fear.and..loading / notes from swarm - Хроники ixxtab'",
   "author": "ixxtab",
   "license": "MIT",
-  "homepage": "https://logika-na-zhare.vercel.app",
+  "homepage": "https://fear-and-loading.vercel.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ixxtab/logika-na-zhare.git"
+    "url": "https://github.com/ixxtab/fear-and-loading.git"
   },
   "keywords": ["book", "ai", "singularity", "terminal", "react"],
   "private": false,

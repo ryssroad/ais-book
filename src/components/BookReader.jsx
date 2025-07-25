@@ -81,6 +81,15 @@ export function BookReader() {
             <p className="text-green-500 max-w-2xl mx-auto leading-relaxed font-mono text-sm">
               {bookMeta.description}
             </p>
+            {bookMeta.quote && (
+              <div className="mt-6 max-w-lg mx-auto">
+                <blockquote className="border-l-2 border-cyan-400 pl-4 text-cyan-300 font-mono text-sm italic">
+                  <p className="mb-2">"{bookMeta.quote.text}"</p>
+                  <p className="mb-2 text-xs">"{bookMeta.quote.translation}"</p>
+                  <footer className="text-green-600 not-italic">— {bookMeta.quote.author}</footer>
+                </blockquote>
+              </div>
+            )}
             <div className="mt-4 text-sm text-green-600 font-mono">
               [{bookMeta.year}] • {bookMeta.location}
             </div>
