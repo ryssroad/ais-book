@@ -109,6 +109,12 @@ function processMarkdownContent(content) {
   // Обрабатываем код блоки
   content = content.replace(/`\[(.*?)\]`/g, "`[$1]`");
 
+  // Экранируем специальные символы для JSON
+  content = content.replace(/\\/g, '\\\\'); // Экранируем обратные слэши
+  content = content.replace(/"/g, '\\"'); // Экранируем кавычки
+  content = content.replace(/\t/g, '\\t'); // Экранируем табуляции
+  content = content.replace(/\r/g, '\\r'); // Экранируем возврат каретки
+
   return content;
 }
 
