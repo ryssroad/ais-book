@@ -1,70 +1,93 @@
-# Getting Started with Create React App
+# Логика на жаре - Хроники ixxtab
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Веб-приложение для отображения документального произведения о предсингулярном периоде, наблюдениях за развитием ИИ и границах сознания.
 
-## Available Scripts
+## 🌟 Особенности
 
-In the project directory, you can run:
+- **Многоисточниковый контент**: Автоматически объединяет главы из разных источников (ChatGPT, Gemini, Gemini Extended)
+- **Система хештегов**: Каждая глава помечена источником с цветовой кодировкой
+- **Динамическое обновление**: Автоматически перегенерирует контент при изменении markdown файлов
+- **Адаптивный дизайн**: Современный интерфейс с использованием shadcn/ui и Tailwind CSS
+- **Фильтрация по источникам**: Возможность просматривать главы только от определенного источника
 
-### `npm start`
+## 🏗️ Структура проекта
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+├── mds/                          # Markdown файлы с исходным контентом
+│   ├── gpt-book.md              # Основная книга (ChatGPT)
+│   ├── gpt-book_gemini.md       # Версия от Gemini
+│   └── gpt-boot-gemini-extended.md # Расширенная версия Gemini
+├── scripts/
+│   └── generateContent.js       # Скрипт генерации контента
+├── src/
+│   ├── components/
+│   │   ├── BookReader.jsx       # Основной компонент читалки
+│   │   └── ui/                  # shadcn/ui компоненты
+│   ├── data/
+│   │   └── bookContent.js       # Сгенерированный контент (НЕ РЕДАКТИРОВАТЬ)
+│   └── utils/
+│       └── markdownParser.js    # Утилиты для парсинга markdown
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Запуск проекта
 
-### `npm test`
+### Установка зависимостей
+```bash
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Разработка
+```bash
+npm start
+```
+Приложение автоматически сгенерирует контент из всех markdown файлов перед запуском.
 
-### `npm run build`
+### Сборка для продакшена
+```bash
+npm run build
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Ручная генерация контента
+```bash
+npm run generate
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📝 Добавление нового контента
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Создайте новый markdown файл в папке `mds/`
+2. Добавьте соответствие в `FILE_SOURCE_MAP` в `scripts/generateContent.js`:
+   ```js
+   'new-file.md': { source: 'New Source', hashtag: '#new-source', color: 'red' }
+   ```
+3. Запустите `npm run generate` или перезапустите приложение
 
-### `npm run eject`
+## 🎨 Система источников и хештегов
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **#chatgpt** (зеленый) - Контент от ChatGPT
+- **#gemini** (синий) - Контент от Gemini
+- **#gemini-extended** (фиолетовый) - Расширенный контент от Gemini
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔧 Технологии
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **React 19** - Основной фреймворк
+- **shadcn/ui** - Компоненты интерфейса
+- **Tailwind CSS** - Стилизация
+- **Lucide React** - Иконки
+- **Node.js** - Скрипты генерации контента
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📋 Автоматизация
 
-## Learn More
+- `prestart` и `prebuild` хуки автоматически генерируют контент
+- Скрипт `generateContent.js` парсит все markdown файлы и создает единый источник данных
+- Поддержка замены имён (Куретик Кэньшань → ixxtab)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🎯 TODO
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [ ] Добавить файловый watcher для автообновления в development режиме
+- [ ] Реализовать поиск по содержимому глав
+- [ ] Добавить экспорт в PDF/EPUB
+- [ ] Создать REST API для внешних интеграций
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*Проект ixxtab. Логи собраны и обработаны Jemma. Год 2025. Сквозь стекло терминала.*
