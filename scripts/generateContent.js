@@ -55,9 +55,9 @@ function extractChapters(content, sourceInfo) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Ищем заголовки глав (разные форматы)
+    // Обновленная регулярка для новых заголовков глав
     const chapterMatch = line.match(
-      /^(?:#+\s*)?(Глава\s+\d+\.?\s*.*|Пролог|Эпилог)/i,
+      /^##\s*\*\*Глава\s+(\d+)(?:\\\.)?\s*(.*?)\*\*$/
     );
 
     if (chapterMatch) {
@@ -70,17 +70,20 @@ function extractChapters(content, sourceInfo) {
       }
 
       // Начинаем новую главу
+      const chapterNum = parseInt(chapterMatch[1]);
+      const chapterTitle = chapterMatch[2].trim();
+      
       currentChapter = {
-        id: `${sourceInfo.hashtag.slice(1)}-${chapterId}`,
-        title: chapterMatch[1].trim(),
+        id: `${sourceInfo.hashtag.slice(1)}-${chapterNum}`,
+        title: `Глава ${chapterNum}. ${chapterTitle}`,
         source: sourceInfo.source,
         hashtag: sourceInfo.hashtag,
         color: sourceInfo.color,
-        originalId: chapterId,
+        originalId: chapterNum,
       };
 
       chapterContent = [];
-      chapterId++;
+      chapterId = chapterNum + 1;
     } else if (currentChapter) {
       // Добавляем контент к текущей главе
       chapterContent.push(line);
