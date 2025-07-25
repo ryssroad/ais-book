@@ -102,6 +102,15 @@ function extractChapters(content, sourceInfo) {
 function processMarkdownContent(content) {
   // Заменяем "Куретик Кэньшань" на "ixxtab"
   content = content.replace(/Куретик\s+Кэньшань/g, "ixxtab");
+  
+  // Заменяем все вхождения "Куретик" и производных на "ixxtab" или "xtb"
+  content = content.replace(/Куретик[а-я]*/gi, (match) => {
+    // Куретик -> ixxtab, Куретика -> ixxtab, и т.д.
+    if (match.toLowerCase().includes('куретик')) {
+      return Math.random() > 0.5 ? 'ixxtab' : 'xtb';
+    }
+    return match;
+  });
 
   // Обрабатываем специальные блоки в Gemini Extended формате
   content = content.replace(/\*\*\[(.*?)\]\*\*/g, "**[$1]**");
