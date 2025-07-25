@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { ScrollArea } from './ui/scroll-area';
-import { Separator } from './ui/separator';
-import { ChevronLeft, ChevronRight, BookOpen, Menu, Tag } from 'lucide-react';
-import { bookChapters, bookMeta } from '../data/bookContent';
+import React, { useState } from "react";
+import { bookChapters, bookMeta } from "../data/bookContent";
 
 // Компонент для отображения источника в терминальном стиле
 function SourceBadge({ source, hashtag, color }) {
   const colorClasses = {
-    green: 'text-green-400 border-green-400',
-    blue: 'text-cyan-400 border-cyan-400', 
-    purple: 'text-purple-400 border-purple-400',
-    gray: 'text-gray-400 border-gray-400'
+    green: "text-green-400 border-green-400",
+    blue: "text-cyan-400 border-cyan-400",
+    purple: "text-purple-400 border-purple-400",
+    gray: "text-gray-400 border-gray-400",
   };
 
   return (
-    <div className={`inline-flex items-center gap-1 px-2 py-1 border text-xs font-mono ${colorClasses[color] || colorClasses.gray}`}>
+    <div
+      className={`inline-flex items-center gap-1 px-2 py-1 border text-xs font-mono ${colorClasses[color] || colorClasses.gray}`}
+    >
       <span>[</span>
       <span className="font-medium">{hashtag}</span>
       <span>]</span>
@@ -27,7 +24,7 @@ function SourceBadge({ source, hashtag, color }) {
 export function BookReader() {
   const [selectedChapter, setSelectedChapter] = useState(null);
   const [showChapterList, setShowChapterList] = useState(true);
-  const [sourceFilter, setSourceFilter] = useState('all');
+  const [sourceFilter, setSourceFilter] = useState("all");
 
   const handleChapterSelect = (chapter) => {
     setSelectedChapter(chapter);
@@ -40,26 +37,31 @@ export function BookReader() {
   };
 
   const handleNextChapter = () => {
-    const currentIndex = bookChapters.findIndex(ch => ch.id === selectedChapter.id);
+    const currentIndex = bookChapters.findIndex(
+      (ch) => ch.id === selectedChapter.id,
+    );
     if (currentIndex < bookChapters.length - 1) {
       setSelectedChapter(bookChapters[currentIndex + 1]);
     }
   };
 
   const handlePrevChapter = () => {
-    const currentIndex = bookChapters.findIndex(ch => ch.id === selectedChapter.id);
+    const currentIndex = bookChapters.findIndex(
+      (ch) => ch.id === selectedChapter.id,
+    );
     if (currentIndex > 0) {
       setSelectedChapter(bookChapters[currentIndex - 1]);
     }
   };
 
   // Фильтрация глав по источнику
-  const filteredChapters = sourceFilter === 'all' 
-    ? bookChapters 
-    : bookChapters.filter(chapter => chapter.source === sourceFilter);
+  const filteredChapters =
+    sourceFilter === "all"
+      ? bookChapters
+      : bookChapters.filter((chapter) => chapter.source === sourceFilter);
 
   // Получаем уникальные источники для фильтра
-  const sources = [...new Set(bookChapters.map(chapter => chapter.source))];
+  const sources = [...new Set(bookChapters.map((chapter) => chapter.source))];
 
   if (showChapterList) {
     return (
@@ -73,7 +75,9 @@ export function BookReader() {
                 {bookMeta.title}
               </h1>
             </div>
-            <p className="text-xl text-green-300 mb-2 font-mono">{bookMeta.subtitle}</p>
+            <p className="text-xl text-green-300 mb-2 font-mono">
+              {bookMeta.subtitle}
+            </p>
             <p className="text-green-500 max-w-2xl mx-auto leading-relaxed font-mono text-sm">
               {bookMeta.description}
             </p>
@@ -81,14 +85,15 @@ export function BookReader() {
               [{bookMeta.year}] • {bookMeta.location}
             </div>
             <div className="mt-4 flex flex-wrap gap-2 justify-center">
-              {bookMeta.sources && bookMeta.sources.map((sourceInfo, index) => (
-                <SourceBadge 
-                  key={index}
-                  source={sourceInfo.source}
-                  hashtag={sourceInfo.hashtag}
-                  color={sourceInfo.color}
-                />
-              ))}
+              {bookMeta.sources &&
+                bookMeta.sources.map((sourceInfo, index) => (
+                  <SourceBadge
+                    key={index}
+                    source={sourceInfo.source}
+                    hashtag={sourceInfo.hashtag}
+                    color={sourceInfo.color}
+                  />
+                ))}
             </div>
           </div>
 
@@ -100,38 +105,39 @@ export function BookReader() {
                 <span>Содержание</span>
                 <span>]</span>
               </h2>
-              
+
               {/* Source Filter */}
               <div className="flex gap-2">
                 <button
-                  onClick={() => setSourceFilter('all')}
+                  onClick={() => setSourceFilter("all")}
                   className={`px-3 py-1 text-xs font-mono border transition-colors ${
-                    sourceFilter === 'all' 
-                      ? 'bg-green-400 text-black border-green-400' 
-                      : 'text-green-400 border-green-400 hover:bg-green-400 hover:text-black'
+                    sourceFilter === "all"
+                      ? "bg-green-400 text-black border-green-400"
+                      : "text-green-400 border-green-400 hover:bg-green-400 hover:text-black"
                   }`}
                 >
                   [ALL:{bookChapters.length}]
                 </button>
-                {sources.map(source => (
+                {sources.map((source) => (
                   <button
                     key={source}
                     onClick={() => setSourceFilter(source)}
                     className={`px-3 py-1 text-xs font-mono border transition-colors ${
                       sourceFilter === source
-                        ? 'bg-green-400 text-black border-green-400'
-                        : 'text-green-400 border-green-400 hover:bg-green-400 hover:text-black'
+                        ? "bg-green-400 text-black border-green-400"
+                        : "text-green-400 border-green-400 hover:bg-green-400 hover:text-black"
                     }`}
                   >
-                    [{source.toUpperCase()}:{bookChapters.filter(ch => ch.source === source).length}]
+                    [{source.toUpperCase()}:
+                    {bookChapters.filter((ch) => ch.source === source).length}]
                   </button>
                 ))}
               </div>
             </div>
-            
+
             <div className="grid gap-4 md:grid-cols-2">
               {filteredChapters.map((chapter) => (
-                <div 
+                <div
                   key={chapter.id}
                   className="border border-green-400 bg-black hover:bg-green-400/10 transition-all duration-200 cursor-pointer group p-4"
                   onClick={() => handleChapterSelect(chapter)}
@@ -145,20 +151,25 @@ export function BookReader() {
                         <span className="text-green-600 text-sm font-mono">
                           [Chapter {chapter.originalId}]
                         </span>
-                        <SourceBadge 
+                        <SourceBadge
                           source={chapter.source}
                           hashtag={chapter.hashtag}
                           color={chapter.color}
                         />
                       </div>
                     </div>
-                    <span className="text-green-600 group-hover:text-green-400 transition-colors font-mono">&gt;</span>
+                    <span className="text-green-600 group-hover:text-green-400 transition-colors font-mono">
+                      &gt;
+                    </span>
                   </div>
-                  <p className="text-green-500 text-sm leading-relaxed overflow-hidden font-mono" style={{
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical'
-                  }}>
+                  <p
+                    className="text-green-500 text-sm leading-relaxed overflow-hidden font-mono"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                    }}
+                  >
                     {chapter.content.substring(0, 120)}...
                   </p>
                 </div>
@@ -171,7 +182,9 @@ export function BookReader() {
   }
 
   // Chapter View
-  const currentIndex = bookChapters.findIndex(ch => ch.id === selectedChapter.id);
+  const currentIndex = bookChapters.findIndex(
+    (ch) => ch.id === selectedChapter.id,
+  );
   const canGoPrev = currentIndex > 0;
   const canGoNext = currentIndex < bookChapters.length - 1;
 
@@ -180,15 +193,15 @@ export function BookReader() {
       <div className="container mx-auto px-4 py-8">
         {/* Navigation Header */}
         <div className="flex items-center justify-between mb-8">
-          <button 
+          <button
             onClick={handleBackToChapters}
             className="text-green-400 hover:text-green-300 border border-green-400 hover:bg-green-400/10 px-3 py-2 font-mono transition-colors"
           >
             &lt; [BACK_TO_INDEX]
           </button>
-          
+
           <div className="flex items-center gap-2 font-mono">
-            <button 
+            <button
               onClick={handlePrevChapter}
               disabled={!canGoPrev}
               className="text-green-400 hover:text-green-300 border border-green-400 hover:bg-green-400/10 px-2 py-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -198,7 +211,7 @@ export function BookReader() {
             <span className="text-green-600 text-sm px-3">
               [{currentIndex + 1}/{bookChapters.length}]
             </span>
-            <button 
+            <button
               onClick={handleNextChapter}
               disabled={!canGoNext}
               className="text-green-400 hover:text-green-300 border border-green-400 hover:bg-green-400/10 px-2 py-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -219,7 +232,7 @@ export function BookReader() {
                 <div className="text-green-600 text-sm font-mono">
                   [Chapter {selectedChapter.originalId}]
                 </div>
-                <SourceBadge 
+                <SourceBadge
                   source={selectedChapter.source}
                   hashtag={selectedChapter.hashtag}
                   color={selectedChapter.color}
@@ -229,42 +242,62 @@ export function BookReader() {
             <div className="p-6">
               <div className="h-[600px] overflow-y-auto pr-4 scrollbar-thin scrollbar-track-black scrollbar-thumb-green-400">
                 <div className="text-green-300 leading-relaxed text-base font-mono">
-                  {selectedChapter.content.split('\n\n').map((paragraph, index) => {
-                    // Handle quoted text
-                    if (paragraph.startsWith('"') && paragraph.endsWith('"')) {
+                  {selectedChapter.content
+                    .split("\n\n")
+                    .map((paragraph, index) => {
+                      // Handle quoted text
+                      if (
+                        paragraph.startsWith('"') &&
+                        paragraph.endsWith('"')
+                      ) {
+                        return (
+                          <blockquote
+                            key={index}
+                            className="border-l-2 border-cyan-400 pl-4 my-6 italic text-cyan-300"
+                          >
+                            &gt; {paragraph.slice(1, -1)}
+                          </blockquote>
+                        );
+                      }
+                      // Handle dialogue
+                      if (paragraph.includes("—") || paragraph.includes("– ")) {
+                        return (
+                          <div
+                            key={index}
+                            className="my-4 pl-4 border-l border-green-600"
+                          >
+                            <p className="text-green-300 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          </div>
+                        );
+                      }
+                      // Handle code blocks or special formatting
+                      if (
+                        paragraph.includes("`") ||
+                        (paragraph.includes("[") && paragraph.includes("]"))
+                      ) {
+                        return (
+                          <div
+                            key={index}
+                            className="my-4 p-3 bg-green-400/5 border border-green-600"
+                          >
+                            <pre className="text-green-400 text-sm whitespace-pre-wrap">
+                              {paragraph}
+                            </pre>
+                          </div>
+                        );
+                      }
+                      // Regular paragraph
                       return (
-                        <blockquote key={index} className="border-l-2 border-cyan-400 pl-4 my-6 italic text-cyan-300">
-                          &gt; {paragraph.slice(1, -1)}
-                        </blockquote>
+                        <p
+                          key={index}
+                          className="mb-6 text-green-300 leading-relaxed"
+                        >
+                          {paragraph}
+                        </p>
                       );
-                    }
-                    // Handle dialogue
-                    if (paragraph.includes('—') || paragraph.includes('– ')) {
-                      return (
-                        <div key={index} className="my-4 pl-4 border-l border-green-600">
-                          <p className="text-green-300 leading-relaxed">
-                            {paragraph}
-                          </p>
-                        </div>
-                      );
-                    }
-                    // Handle code blocks or special formatting
-                    if (paragraph.includes('`') || paragraph.includes('[') && paragraph.includes(']')) {
-                      return (
-                        <div key={index} className="my-4 p-3 bg-green-400/5 border border-green-600">
-                          <pre className="text-green-400 text-sm whitespace-pre-wrap">
-                            {paragraph}
-                          </pre>
-                        </div>
-                      );
-                    }
-                    // Regular paragraph
-                    return (
-                      <p key={index} className="mb-6 text-green-300 leading-relaxed">
-                        {paragraph}
-                      </p>
-                    );
-                  })}
+                    })}
                 </div>
               </div>
             </div>
@@ -273,22 +306,26 @@ export function BookReader() {
           {/* Chapter Navigation Footer */}
           <div className="flex justify-between items-center mt-8">
             {canGoPrev ? (
-              <button 
+              <button
                 onClick={handlePrevChapter}
                 className="text-green-400 hover:text-green-300 border border-green-400 hover:bg-green-400/10 px-4 py-2 font-mono transition-colors"
               >
                 &lt; [PREV_CHAPTER]
               </button>
-            ) : <div />}
-            
+            ) : (
+              <div />
+            )}
+
             {canGoNext ? (
-              <button 
+              <button
                 onClick={handleNextChapter}
                 className="text-green-400 hover:text-green-300 border border-green-400 hover:bg-green-400/10 px-4 py-2 font-mono transition-colors"
               >
                 [NEXT_CHAPTER] &gt;
               </button>
-            ) : <div />}
+            ) : (
+              <div />
+            )}
           </div>
         </div>
       </div>
